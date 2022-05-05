@@ -1,0 +1,49 @@
+{
+  "name": "@trakon/sdk",
+  "version": "1.0.0",
+  "repository": "github:zepheruslabs/trakon-sdk",
+  "author": "steven@zepherus.xyz",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "bin": {
+    "trakon": "./dist/cjs/index.js"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "devDependencies": {
+    "@types/axios": "0.14.0",
+    "@types/node": "16.9.4",
+    "@types/prompts": "2.0.14",
+    "@types/yargs": "17.0.10",
+    "ts-node": "10.7.0",
+    "ts-node-dev": "1.1.8",
+    "typescript": "4.6.4"
+  },
+  "scripts": {
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "tsc --declaration -p tsconfig-cjs.json && echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
+    "build:esm": "tsc --declaration -p tsconfig-esm.json && echo '{\"type\":\"module\"}' > ./dist/esm/package.json",
+    "globalinstall": "npm uninstall -g @trakon/sdk && yarn build && rm -rf $(yarn cache dir)/.tmp && (rm ./trakon-sdk.tgz || true) && yarn build && yarn pack --filename trakon-sdk.tgz && npm i -g add file://$PWD/trakon-sdk.tgz",
+    "dev:watch": "ts-node-dev --watch './src/**/*.ts' --transpile-only ./src/index.ts",
+    "dev": "ts-node-dev --transpile-only ./src/index.ts",
+    "create": "yarn build && yarn test"
+  },
+  "dependencies": {
+    "axios": "0.27.2",
+    "prompts": "2.4.2",
+    "solc": "0.8.13",
+    "yargs": "17.4.1"
+  },
+  "packageManager": "yarn@3.2.0"
+}

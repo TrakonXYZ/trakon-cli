@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "strictNullChecks": true,
+    "lib": ["es6", "esnext", "dom"],
+    "declaration": true,
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src", ".eslintrc.js", "index.d.ts"],
+  "exclude": ["dist"]
+}
