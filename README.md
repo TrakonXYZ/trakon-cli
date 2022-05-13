@@ -1,6 +1,6 @@
 # Trakon SDK
 
-Stage your hardhat and truffle compiled smart contracts with Trakon. Then review, share, and deploy them from a private dashboard.
+Stage your hardhat and truffle compiled smart contracts with [Trakon](https://trakon.xyz). Then review, share, and deploy them from a [private dashboard](https://trakon.xyz/compilations).
 
 ![stage example in terminal](/docs/stage-example.gif)
 
