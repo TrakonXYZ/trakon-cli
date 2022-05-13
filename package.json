@@ -1,8 +1,11 @@
 {
-  "name": "@trakon/sdk",
+  "name": "@zepheruslabs/trakon-sdk",
   "version": "1.0.0",
   "repository": "github:zepheruslabs/trakon-sdk",
-  "author": "steven@zepherus.xyz",
+  "homepage": "https://github.com/zepheruslabs/trakon-sdk/tree/master",
+  "description": "Trakon SDK for staging smart contracts on https://trakon.xyz",
+  "author": "Zepherus Labs",
+  "license": "MIT",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/cjs/index.d.ts",
