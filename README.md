@@ -8,7 +8,7 @@ Stage your hardhat and truffle compiled smart contracts with [Trakon](https://tr
 
 ### Prerequisites
 
-Trakon requires contracts to be compiled in a [Hardhat](https://hardhat.org/) or [Truffle](https://trufflesuite.com/) project
+Trakon requires [node 16.x](https://nodejs.org/en/download/) and contracts to be compiled in a [Hardhat](https://hardhat.org/) or [Truffle](https://trufflesuite.com/) project
 before staging.
 
 #### Yarn 2
