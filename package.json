@@ -1,6 +1,6 @@
 {
   "name": "@zepheruslabs/trakon-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "github:zepheruslabs/trakon-sdk",
   "homepage": "https://github.com/zepheruslabs/trakon-sdk/tree/master",
   "description": "Trakon SDK for staging smart contracts on https://trakon.xyz",
