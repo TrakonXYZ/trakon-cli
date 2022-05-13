@@ -95,7 +95,7 @@ const promptContractChoice = async (scanResult: {
       value: filepath,
     }
   })
-  console.log('choices:', choices)
+  // console.log('choices:', choices)
   // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
   return prompts.select({
     type: 'select',
@@ -279,7 +279,7 @@ export const stage = async (
     console.warn('No Solidity compilation files found.')
     return
   }
-  console.debug('scanResult:', scanResult)
+  //console.debug('scanResult:', scanResult)
   const choice = await promptContractChoice(scanResult)
 
   if (choice) {

@@ -2,6 +2,8 @@
 
 Stage your hardhat and truffle compiled smart contracts with Trakon. Then review, share, and deploy them from a private dashboard.
 
+![stage example in terminal](/docs/stage-example.gif)
+
 ## Installation
 
 ### Prerequisites
