@@ -55,26 +55,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trakon/sdk@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@trakon/sdk@workspace:."
-  dependencies:
-    "@types/axios": 0.14.0
-    "@types/node": 16.9.4
-    "@types/prompts": 2.0.14
-    "@types/yargs": 17.0.10
-    axios: 0.27.2
-    prompts: 2.4.2
-    solc: 0.8.13
-    ts-node: 10.7.0
-    ts-node-dev: 1.1.8
-    typescript: 4.6.4
-    yargs: 17.4.1
-  bin:
-    trakon: ./dist/cjs/index.js
-  languageName: unknown
-  linkType: soft
-
 "@tsconfig/node10@npm:^1.0.7":
   version: 1.0.8
   resolution: "@tsconfig/node10@npm:1.0.8"
@@ -164,6 +144,26 @@ __metadata:
   checksum: f0673cbfc08e17239dc58952a88350d6c4db04a027a28a06fbad27d87b670e909f9cd9e66f9c64cebdd5071d1096261e33454a55868395f125297e5c50992ca8
   languageName: node
   linkType: hard
+
+"@zepheruslabs/trakon-sdk@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@zepheruslabs/trakon-sdk@workspace:."
+  dependencies:
+    "@types/axios": 0.14.0
+    "@types/node": 16.9.4
+    "@types/prompts": 2.0.14
+    "@types/yargs": 17.0.10
+    axios: 0.27.2
+    prompts: 2.4.2
+    solc: 0.8.13
+    ts-node: 10.7.0
+    ts-node-dev: 1.1.8
+    typescript: 4.6.4
+    yargs: 17.4.1
+  bin:
+    trakon: ./dist/cjs/index.js
+  languageName: unknown
+  linkType: soft
 
 "abbrev@npm:1":
   version: 1.1.1
