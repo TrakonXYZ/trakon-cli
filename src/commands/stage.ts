@@ -5,7 +5,7 @@ import solc from 'solc'
 import type yargs from 'yargs'
 
 import type { CompilerSettings } from '../types'
-import { submitStaging } from '../api.service'
+import { API_KEY, checkAccessToken, submitSnapshot } from '../api.service'
 import { ZEPHERUS_UI_BASE } from '../api.constants'
 
 const REQUIRED_SOLC_STANDARD_JSON_FIELDS = [
@@ -271,8 +271,15 @@ export const buildTruffleInput = (parsedContent: {
 }
 
 export const stage = async (
-  command: yargs.ArgumentsCamelCase<{ path: string }>,
+  command: yargs.ArgumentsCamelCase<{ path: string; projectId?: string }>,
 ) => {
+  if (API_KEY) {
+    const userAddress = await checkAccessToken()
+    if (!userAddress) {
+      throw Error('Your API key is not valid.')
+    }
+  }
+
   const scanResult = scanPath(path.join(process.cwd(), command.path))
   const choicesCount = Object.keys(scanResult).length
   if (choicesCount < 1) {
@@ -339,19 +346,20 @@ export const stage = async (
     )
     console.log('Compiled:', JSON.stringify(contractNames, null, 2))
 
-    const stagingResult = await submitStaging(compilationResult).catch(
-      (err) => {
-        console.error(err)
-        return err
-      },
-    )
-    if (stagingResult.claimUrl) {
+    const stagingResult = await submitSnapshot(
+      compilationResult,
+      command.projectId,
+    ).catch((err) => {
+      console.error(err)
+      return err
+    })
+    if (stagingResult.url) {
       console.log(
-        `Deploy staging complete! To claim this deploy staging, visit ${stagingResult.claimUrl}`,
+        `Snapshot complete! To see your project, visit ${stagingResult.url}`,
       )
     } else {
       console.error(
-        'There was an error uploading the compilation.',
+        'There was an error uploading the snapshot.',
         stagingResult.response?.data?.errors ?? 'Unknown Error.',
       )
     }
