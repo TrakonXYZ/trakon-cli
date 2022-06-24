@@ -1,4 +1,4 @@
 export interface CompilerSettings {
-  optimizer: { enabled: boolean; runs: number }
-  evmVersion: string
+  optimizer?: { enabled: boolean; runs: number }
+  evmVersion?: string
 }

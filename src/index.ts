@@ -2,16 +2,16 @@
 
 import yargs from 'yargs'
 
-import { stage } from './commands/stage'
+import { snapshot } from './commands/snapshot'
 
 yargs.scriptName('trakon').parse(process.argv.slice(2))
 
 yargs
   .scriptName('trakon')
   .command({
-    command: 'stage',
+    command: 'snapshot',
     describe: 'Discover compiled contracts in a directory for staging',
-    handler: stage,
+    handler: snapshot,
     builder: (y) => {
       return y
         .positional('path', {
