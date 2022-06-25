@@ -12,6 +12,12 @@ yargs
     describe: 'API key generated from https://trakon.xyz',
     global: false,
   })
+  .option('verbose', {
+    alias: 'v',
+    type: 'boolean',
+    describe: 'Verbose output',
+    global: false,
+  })
   .middleware([envMiddleware])
   .command({
     command: 'snapshot [path]',
@@ -33,7 +39,7 @@ yargs
         })
     },
   })
-  .global('api-key')
+  .global(['api-key', 'verbose'])
   .demandCommand(1, '')
   .help()
   .showHelpOnFail(true).argv

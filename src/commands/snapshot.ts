@@ -5,13 +5,7 @@ import solc from 'solc'
 import yargs from 'yargs'
 
 import type { CompilerSettings } from '../types'
-import {
-  API_KEY,
-  checkAccessToken,
-  createProject,
-  getProjects,
-  submitSnapshot,
-} from '../api.service'
+import { checkAccessToken, getProjects, submitSnapshot } from '../api.service'
 import { TRAKON_UI_BASE } from '../api.constants'
 import env from '../env'
 
@@ -146,7 +140,9 @@ const scanPathForArtifacts = (
     parsedContent = JSON.parse(contents)
   } catch (e) {
     // unparseable json file
-    console.warn('Could not parse json file:', filePath)
+    if (env.VERBOSE) {
+      console.warn('Could not parse json file:', filePath)
+    }
     return {
       solcLongVersion: '',
       sources: {},
@@ -155,7 +151,9 @@ const scanPathForArtifacts = (
   }
 
   if (typeof parsedContent !== 'object') {
-    console.error('Invalid json content in file:', filePath)
+    if (env.VERBOSE) {
+      console.warn('Invalid json content in file:', filePath)
+    }
     return {
       solcLongVersion: '',
       sources: {},
@@ -301,17 +299,17 @@ export const snapshot = async (
     )
   }
   console.info('Contracts compiled.')
-  console.info('Uploading snapshot...')
 
+  console.info('Uploading snapshot...')
   try {
     const snapshotResult = await submitSnapshot(compilationResult, projectId)
     console.info(
       `Snapshot complete! To see your project, visit ${snapshotResult.url}`,
     )
-  } catch (err) {
+  } catch (err: any) {
     console.error(
       'There was an error uploading the snapshot.',
-      JSON.stringify(err.response.data.errors, null, 2) ?? 'Unknown Error.',
+      env.VERBOSE ? JSON.stringify(err.response.data.errors, null, 2) : '',
     )
     return
   }

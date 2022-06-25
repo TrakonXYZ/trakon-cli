@@ -1,7 +1,7 @@
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { TRAKON_API_BASE, TRAKON_UI_BASE } from './api.constants'
 import env from './env'
 
@@ -48,7 +48,6 @@ export const getProjects = async ({
 }
 
 export const createProject = async (uploadId: string) => {
-  console.log('WHAT IS THIS', uploadId)
   const url = `${TRAKON_API_BASE}/projects`
   const result = await axios.post<{ slug: string }>(
     url,
@@ -75,7 +74,6 @@ export const submitSnapshot = async (
     },
   )
 
-  console.log('What is the projectId:', projectId)
   if (!projectId) {
     projectId = await createProject(uploadUrlResponse.id)
   } else {
