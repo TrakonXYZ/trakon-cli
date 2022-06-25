@@ -1,8 +1,9 @@
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { TRAKON_API_BASE, TRAKON_UI_BASE } from './api.constants'
+import env from './env'
 
 export const loadTrakonCredentials = () => {
   const credentialPath = path.join(os.homedir(), '.trakon-credentials')
@@ -12,8 +13,6 @@ export const loadTrakonCredentials = () => {
   return undefined
 }
 
-export const API_KEY = loadTrakonCredentials()
-
 export const createUploadUrl = async () => {
   const url = `${TRAKON_API_BASE}/projects/snapshot-uploads`
   const result = await axios.post<{ uploadUrl: string; id: string }>(url)
@@ -22,12 +21,43 @@ export const createUploadUrl = async () => {
 
 export const checkAccessToken = async () => {
   const url = `${TRAKON_API_BASE}/viewer`
-  const result = await axios
-    .get<{ data: { ethAccount: string } }>(url, {
-      headers: { authorization: `bearer ${API_KEY}` },
-    })
-    .catch((err) => console.error(err))
+  const result = await axios.get<{ data: { ethAccount: string } }>(url, {
+    headers: { authorization: `bearer ${env.API_KEY}` },
+  })
   return result?.data.data.ethAccount ?? false
+}
+
+export const getProjects = async ({
+  limit,
+  offset,
+}: {
+  limit: number
+  offset: number
+}) => {
+  const url = `${TRAKON_API_BASE}/projects`
+  const result = await axios.get<{
+    data: { name: string; slug: string }[]
+    meta: { totalCount: number }
+  }>(url, {
+    headers: { authorization: `bearer ${env.API_KEY}` },
+  })
+  return {
+    projects: result?.data.data,
+    hasMore: limit + offset > (result?.data.meta.totalCount ?? 0),
+  }
+}
+
+export const createProject = async (uploadId: string) => {
+  console.log('WHAT IS THIS', uploadId)
+  const url = `${TRAKON_API_BASE}/projects`
+  const result = await axios.post<{ slug: string }>(
+    url,
+    { uploadId },
+    {
+      headers: { authorization: `bearer ${env.API_KEY}` },
+    },
+  )
+  return result?.data.slug
 }
 
 export const submitSnapshot = async (
@@ -45,19 +75,17 @@ export const submitSnapshot = async (
     },
   )
 
-  const snapshotResponse = projectId
-    ? await axios.put<{ project: { id: string } }>(
-        `${TRAKON_API_BASE}/projects/${projectId}/snapshots`,
-        { uploadId: uploadUrlResponse.id },
-        { headers: { authorization: `bearer ${API_KEY}` } },
-      )
-    : await axios.post<{ project: { id: string } }>(
-        `${TRAKON_API_BASE}/projects`,
-        {
-          uploadId: uploadUrlResponse.id,
-        },
-      )
+  console.log('What is the projectId:', projectId)
+  if (!projectId) {
+    projectId = await createProject(uploadUrlResponse.id)
+  } else {
+    await axios.put<{ project: { id: string } }>(
+      `${TRAKON_API_BASE}/projects/${projectId}/snapshots`,
+      { uploadId: uploadUrlResponse.id },
+      { headers: { authorization: `bearer ${env.API_KEY}` } },
+    )
+  }
 
-  const url = `${TRAKON_UI_BASE}/projects/${snapshotResponse.data.project.id}`
-  return { ...snapshotResponse.data, isClaimed: !!projectId, url }
+  const url = `${TRAKON_UI_BASE}/projects/${projectId}`
+  return { url }
 }

@@ -2,11 +2,18 @@ import fs from 'fs'
 import path from 'path'
 import { prompts } from 'prompts'
 import solc from 'solc'
-import type yargs from 'yargs'
+import yargs from 'yargs'
 
 import type { CompilerSettings } from '../types'
-import { API_KEY, checkAccessToken, submitSnapshot } from '../api.service'
+import {
+  API_KEY,
+  checkAccessToken,
+  createProject,
+  getProjects,
+  submitSnapshot,
+} from '../api.service'
 import { TRAKON_UI_BASE } from '../api.constants'
+import env from '../env'
 
 const REQUIRED_SOLC_STANDARD_JSON_FIELDS = [
   'solcVersion',
@@ -220,20 +227,53 @@ export const recompileStandard = async (
 }
 
 export const snapshot = async (
-  command: yargs.ArgumentsCamelCase<{ path: string; projectId?: string }>,
+  command: yargs.ArgumentsCamelCase<{
+    path: string
+    projectId?: string
+    apiKey?: string
+  }>,
 ) => {
-  if (API_KEY) {
-    const userAddress = await checkAccessToken()
-    if (!userAddress) {
-      throw Error('Your API key is not valid.')
+  if (!env.API_KEY) {
+    console.error(
+      'Requires an API key. Head to https://trakon.xyz to generate one.',
+    )
+    return
+  }
+
+  try {
+    await checkAccessToken()
+  } catch (e) {
+    console.error('Your API key is not valid.')
+    return
+  }
+
+  let projectId = command.projectId
+  if (!projectId) {
+    let projectsResponse = await getProjects({ limit: 25, offset: 0 })
+    if (projectsResponse.projects?.length || 0 > 0) {
+      projectId = await (prompts.select({
+        type: 'select',
+        name: 'Select project',
+        message: 'Choose an existing project or create a new one',
+        choices: [
+          { title: 'Create new project', value: '' },
+          ...(projectsResponse.projects?.map((project) => ({
+            title: project.name
+              ? `${project.name} (${project.slug})`
+              : project.slug,
+            value: project.slug,
+          })) ?? []),
+        ],
+        initial: 0,
+      }) as unknown as Promise<string>)
     }
   }
 
   const scanResult = scanPathForArtifacts(
     path.join(process.cwd(), command.path),
   )
-  const choicesCount = Object.keys(scanResult).length
-  if (choicesCount < 1) {
+  const numSourcesFound = Object.keys(scanResult.sources).length
+  if (numSourcesFound < 1) {
     console.warn('No Solidity compilation files found.')
     return
   }
@@ -260,22 +300,19 @@ export const snapshot = async (
       JSON.stringify(compilationResult.output.errors, null, 4),
     )
   }
+  console.info('Contracts compiled.')
+  console.info('Uploading snapshot...')
 
-  const stagingResult = await submitSnapshot(
-    compilationResult,
-    command.projectId,
-  ).catch((err) => {
-    console.error(err)
-    return err
-  })
-  if (stagingResult.url) {
+  try {
+    const snapshotResult = await submitSnapshot(compilationResult, projectId)
     console.info(
-      `Snapshot complete! To see your project, visit ${stagingResult.url}`,
+      `Snapshot complete! To see your project, visit ${snapshotResult.url}`,
     )
-  } else {
+  } catch (err) {
     console.error(
       'There was an error uploading the snapshot.',
-      stagingResult.response?.data?.errors ?? 'Unknown Error.',
+      JSON.stringify(err.response.data.errors, null, 2) ?? 'Unknown Error.',
     )
+    return
   }
 }
