@@ -1,8 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { prompts } from 'prompts'
-import solc from 'solc'
-import yargs from 'yargs'
+import { ArgumentsCamelCase } from 'yargs'
 
 import type { CompilerSettings } from '../types'
 import { checkAccessToken, getProjects, submitSnapshot } from '../api.service'
@@ -205,9 +204,11 @@ export const recompileStandard = async (
   input: CompilerInput,
 ) => {
   const loadVersion = `v${solcLongVersion}`
+  // Lazy load solc due to performance.
+  const solc = require('solc')
   return new Promise(
     (resolve, reject) =>
-      void solc.loadRemoteVersion(loadVersion, (err, compiler) => {
+      void solc.loadRemoteVersion(loadVersion, (err: any, compiler: any) => {
         if (err) {
           reject(err)
         } else {
@@ -225,7 +226,7 @@ export const recompileStandard = async (
 }
 
 export const snapshot = async (
-  command: yargs.ArgumentsCamelCase<{
+  command: ArgumentsCamelCase<{
     path: string
     projectId?: string
     apiKey?: string

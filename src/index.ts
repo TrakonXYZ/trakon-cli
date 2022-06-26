@@ -15,7 +15,7 @@ yargs
   .option('verbose', {
     alias: 'v',
     type: 'boolean',
-    describe: 'Verbose output',
+    describe: 'Verbose output logging',
     global: false,
   })
   .middleware([envMiddleware])
