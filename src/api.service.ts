@@ -22,7 +22,7 @@ export const createUploadUrl = async () => {
 export const checkAccessToken = async () => {
   const url = `${TRAKON_API_BASE}/viewer`
   const result = await axios.get<{ data: { ethAccount: string } }>(url, {
-    headers: { authorization: `bearer ${env.API_KEY}` },
+    headers: { 'x-api-key': env.API_KEY },
   })
   return result?.data.data.ethAccount ?? false
 }
@@ -39,7 +39,7 @@ export const getProjects = async ({
     data: { name: string; slug: string }[]
     meta: { totalCount: number }
   }>(url, {
-    headers: { authorization: `bearer ${env.API_KEY}` },
+    headers: { 'x-api-key': env.API_KEY },
   })
   return {
     projects: result?.data.data,
@@ -53,7 +53,7 @@ export const createProject = async (uploadId: string) => {
     url,
     { uploadId },
     {
-      headers: { authorization: `bearer ${env.API_KEY}` },
+      headers: { 'x-api-key': env.API_KEY },
     },
   )
   return result?.data.slug
@@ -63,10 +63,11 @@ export const submitSnapshot = async (
   compilationResult: any,
   projectId?: string,
 ) => {
+  const compilations = [compilationResult]
   const uploadUrlResponse = await createUploadUrl()
   await axios.put<{ id: string }>(
     uploadUrlResponse.uploadUrl,
-    JSON.stringify(compilationResult, null, 2),
+    JSON.stringify({ compilations }, null, 2),
     {
       headers: {
         'Content-Type': 'application/octet-stream',
@@ -80,7 +81,7 @@ export const submitSnapshot = async (
     await axios.put<{ project: { id: string } }>(
       `${TRAKON_API_BASE}/projects/${projectId}/snapshots`,
       { uploadId: uploadUrlResponse.id },
-      { headers: { authorization: `bearer ${env.API_KEY}` } },
+      { headers: { 'x-api-key': env.API_KEY } },
     )
   }
 
