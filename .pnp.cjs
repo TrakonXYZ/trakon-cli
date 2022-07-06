@@ -17,14 +17,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     ],\
     "dependencyTreeRoots": [\
       {\
-        "name": "@zepheruslabs/trakon-sdk",\
+        "name": "trakon-cli",\
         "reference": "workspace:."\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
-      ["@zepheruslabs/trakon-sdk", ["workspace:."]]\
+      ["trakon-cli", ["workspace:."]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -40,8 +40,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.27.2"],\
             ["prompts", "npm:2.4.2"],\
             ["solc", "npm:0.8.13"],\
-            ["ts-node", "virtual:8c4d2b2273c0f3774c8e8f1949dae7fd4677afb33f00aaa51babd06f0654f6cd139b4639beafc5018b754070a57e7f675af97444a5b003c718cefc353757c216#npm:10.7.0"],\
-            ["ts-node-dev", "virtual:8c4d2b2273c0f3774c8e8f1949dae7fd4677afb33f00aaa51babd06f0654f6cd139b4639beafc5018b754070a57e7f675af97444a5b003c718cefc353757c216#npm:1.1.8"],\
+            ["ts-node", "virtual:670628d3ec95a50f21c465fbe92361591e69cae2e2dbe78b182ef1f3ea90c09bb8e4156f6a8c09031127b8dab74c2391e8ca1c51d399e18c05c486c932e0f356#npm:10.7.0"],\
+            ["ts-node-dev", "virtual:670628d3ec95a50f21c465fbe92361591e69cae2e2dbe78b182ef1f3ea90c09bb8e4156f6a8c09031127b8dab74c2391e8ca1c51d399e18c05c486c932e0f356#npm:1.1.8"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=bda367"],\
             ["yargs", "npm:17.4.1"]\
           ],\
@@ -214,26 +214,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/yargs-parser", "npm:21.0.0"]\
           ],\
           "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@zepheruslabs/trakon-sdk", [\
-        ["workspace:.", {\
-          "packageLocation": "./",\
-          "packageDependencies": [\
-            ["@zepheruslabs/trakon-sdk", "workspace:."],\
-            ["@types/axios", "npm:0.14.0"],\
-            ["@types/node", "npm:16.9.4"],\
-            ["@types/prompts", "npm:2.0.14"],\
-            ["@types/yargs", "npm:17.0.10"],\
-            ["axios", "npm:0.27.2"],\
-            ["prompts", "npm:2.4.2"],\
-            ["solc", "npm:0.8.13"],\
-            ["ts-node", "virtual:8c4d2b2273c0f3774c8e8f1949dae7fd4677afb33f00aaa51babd06f0654f6cd139b4639beafc5018b754070a57e7f675af97444a5b003c718cefc353757c216#npm:10.7.0"],\
-            ["ts-node-dev", "virtual:8c4d2b2273c0f3774c8e8f1949dae7fd4677afb33f00aaa51babd06f0654f6cd139b4639beafc5018b754070a57e7f675af97444a5b003c718cefc353757c216#npm:1.1.8"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=bda367"],\
-            ["yargs", "npm:17.4.1"]\
-          ],\
-          "linkType": "SOFT"\
         }]\
       ]],\
       ["abbrev", [\
@@ -1747,6 +1727,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["trakon-cli", [\
+        ["workspace:.", {\
+          "packageLocation": "./",\
+          "packageDependencies": [\
+            ["trakon-cli", "workspace:."],\
+            ["@types/axios", "npm:0.14.0"],\
+            ["@types/node", "npm:16.9.4"],\
+            ["@types/prompts", "npm:2.0.14"],\
+            ["@types/yargs", "npm:17.0.10"],\
+            ["axios", "npm:0.27.2"],\
+            ["prompts", "npm:2.4.2"],\
+            ["solc", "npm:0.8.13"],\
+            ["ts-node", "virtual:670628d3ec95a50f21c465fbe92361591e69cae2e2dbe78b182ef1f3ea90c09bb8e4156f6a8c09031127b8dab74c2391e8ca1c51d399e18c05c486c932e0f356#npm:10.7.0"],\
+            ["ts-node-dev", "virtual:670628d3ec95a50f21c465fbe92361591e69cae2e2dbe78b182ef1f3ea90c09bb8e4156f6a8c09031127b8dab74c2391e8ca1c51d399e18c05c486c932e0f356#npm:1.1.8"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=bda367"],\
+            ["yargs", "npm:17.4.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["tree-kill", [\
         ["npm:1.2.2", {\
           "packageLocation": "./.yarn/cache/tree-kill-npm-1.2.2-3da0e5a759-49117f5f41.zip/node_modules/tree-kill/",\
@@ -1771,10 +1771,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:38c126883652f96738f607f16605e07bb1d72ebece9119c97155eb430c84df86678ca3551bf6eaba6b9e9aae728ceed74c8ff5e0076d8c4f0a4fc77cbd3b7ff0#npm:9.1.1", {\
-          "packageLocation": "./.yarn/__virtual__/ts-node-virtual-ad11b40309/0/cache/ts-node-npm-9.1.1-4ad31da228-356e2647b8.zip/node_modules/ts-node/",\
+        ["virtual:667191f05bdcd5f9de6e13075c58e8ae5dd87154cc91a17272ef6a91ed903df2d4c9f7c8d486b1bcaa806aa5dfb9658003b84ab03ec5434994bb124f040a92f2#npm:9.1.1", {\
+          "packageLocation": "./.yarn/__virtual__/ts-node-virtual-681bcc9476/0/cache/ts-node-npm-9.1.1-4ad31da228-356e2647b8.zip/node_modules/ts-node/",\
           "packageDependencies": [\
-            ["ts-node", "virtual:38c126883652f96738f607f16605e07bb1d72ebece9119c97155eb430c84df86678ca3551bf6eaba6b9e9aae728ceed74c8ff5e0076d8c4f0a4fc77cbd3b7ff0#npm:9.1.1"],\
+            ["ts-node", "virtual:667191f05bdcd5f9de6e13075c58e8ae5dd87154cc91a17272ef6a91ed903df2d4c9f7c8d486b1bcaa806aa5dfb9658003b84ab03ec5434994bb124f040a92f2#npm:9.1.1"],\
             ["@types/typescript", null],\
             ["arg", "npm:4.1.3"],\
             ["create-require", "npm:1.1.1"],\
@@ -1790,10 +1790,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["virtual:8c4d2b2273c0f3774c8e8f1949dae7fd4677afb33f00aaa51babd06f0654f6cd139b4639beafc5018b754070a57e7f675af97444a5b003c718cefc353757c216#npm:10.7.0", {\
-          "packageLocation": "./.yarn/__virtual__/ts-node-virtual-c777f3fe69/0/cache/ts-node-npm-10.7.0-ef39b1d45e-2a379e43f7.zip/node_modules/ts-node/",\
+        ["virtual:670628d3ec95a50f21c465fbe92361591e69cae2e2dbe78b182ef1f3ea90c09bb8e4156f6a8c09031127b8dab74c2391e8ca1c51d399e18c05c486c932e0f356#npm:10.7.0", {\
+          "packageLocation": "./.yarn/__virtual__/ts-node-virtual-97f701859c/0/cache/ts-node-npm-10.7.0-ef39b1d45e-2a379e43f7.zip/node_modules/ts-node/",\
           "packageDependencies": [\
-            ["ts-node", "virtual:8c4d2b2273c0f3774c8e8f1949dae7fd4677afb33f00aaa51babd06f0654f6cd139b4639beafc5018b754070a57e7f675af97444a5b003c718cefc353757c216#npm:10.7.0"],\
+            ["ts-node", "virtual:670628d3ec95a50f21c465fbe92361591e69cae2e2dbe78b182ef1f3ea90c09bb8e4156f6a8c09031127b8dab74c2391e8ca1c51d399e18c05c486c932e0f356#npm:10.7.0"],\
             ["@cspotcode/source-map-support", "npm:0.7.0"],\
             ["@swc/core", null],\
             ["@swc/wasm", null],\
@@ -1835,10 +1835,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:8c4d2b2273c0f3774c8e8f1949dae7fd4677afb33f00aaa51babd06f0654f6cd139b4639beafc5018b754070a57e7f675af97444a5b003c718cefc353757c216#npm:1.1.8", {\
-          "packageLocation": "./.yarn/__virtual__/ts-node-dev-virtual-38c1268836/0/cache/ts-node-dev-npm-1.1.8-a4a6e3dc64-768a580621.zip/node_modules/ts-node-dev/",\
+        ["virtual:670628d3ec95a50f21c465fbe92361591e69cae2e2dbe78b182ef1f3ea90c09bb8e4156f6a8c09031127b8dab74c2391e8ca1c51d399e18c05c486c932e0f356#npm:1.1.8", {\
+          "packageLocation": "./.yarn/__virtual__/ts-node-dev-virtual-667191f05b/0/cache/ts-node-dev-npm-1.1.8-a4a6e3dc64-768a580621.zip/node_modules/ts-node-dev/",\
           "packageDependencies": [\
-            ["ts-node-dev", "virtual:8c4d2b2273c0f3774c8e8f1949dae7fd4677afb33f00aaa51babd06f0654f6cd139b4639beafc5018b754070a57e7f675af97444a5b003c718cefc353757c216#npm:1.1.8"],\
+            ["ts-node-dev", "virtual:670628d3ec95a50f21c465fbe92361591e69cae2e2dbe78b182ef1f3ea90c09bb8e4156f6a8c09031127b8dab74c2391e8ca1c51d399e18c05c486c932e0f356#npm:1.1.8"],\
             ["@types/node-notifier", null],\
             ["@types/typescript", null],\
             ["chokidar", "npm:3.5.3"],\
@@ -1850,7 +1850,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["rimraf", "npm:2.7.1"],\
             ["source-map-support", "npm:0.5.21"],\
             ["tree-kill", "npm:1.2.2"],\
-            ["ts-node", "virtual:38c126883652f96738f607f16605e07bb1d72ebece9119c97155eb430c84df86678ca3551bf6eaba6b9e9aae728ceed74c8ff5e0076d8c4f0a4fc77cbd3b7ff0#npm:9.1.1"],\
+            ["ts-node", "virtual:667191f05bdcd5f9de6e13075c58e8ae5dd87154cc91a17272ef6a91ed903df2d4c9f7c8d486b1bcaa806aa5dfb9658003b84ab03ec5434994bb124f040a92f2#npm:9.1.1"],\
             ["tsconfig", "npm:7.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=bda367"]\
           ],\
