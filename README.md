@@ -1,20 +1,20 @@
 # Trakon SDK
 
-Stage your hardhat and truffle compiled smart contracts with [Trakon](https://trakon.xyz). Then review, share, and deploy them from a [private dashboard](https://trakon.xyz/compilations).
+Snapshot your hardhat and truffle compiled smart contracts with [Trakon](https://trakon.xyz). Then review, share, and deploy them from a [private dashboard](https://trakon.xyz/compilations).
 
-![stage example in terminal](/docs/stage-example.gif)
+![Snapshot example in terminal](/docs/stage-example.gif)
 
 ## Installation
 
 ### Prerequisites
 
 Trakon requires [node 16.x](https://nodejs.org/en/download/) and contracts to be compiled in a [Hardhat](https://hardhat.org/) or [Truffle](https://trufflesuite.com/) project
-before staging.
+before snapshotting.
 
 #### Yarn 2
 
 ```shell
-yarn dlx @zepheruslabs/trakon-sdk stage
+yarn dlx @zepheruslabs/trakon-sdk snapshot --api-key <your-api-key>
 ```
 
 #### Yarn
@@ -47,23 +47,23 @@ npx hardhat compile
 truffle compile
 ```
 
-### Stage
+### Snapshot
 
-With the compiled contracts, you can run the Trakon `stage` command in the same project.
+With the compiled contracts, you can run the Trakon `snapshot` command in the same project.
 
 #### Yarn 2
 
 ```shell
-yarn dlx @zepheruslabs/trakon-sdk stage
+yarn dlx @zepheruslabs/trakon-sdk snapshot
 ```
 
 #### Yarn or NPM
 
 ```shell
-trakon stage
+trakon snapshot --api-key <your-api-key>
 ```
 
 Trakon will search in your local project for any compiled contracts and present a list of
-found contracts ready to be staged. Select a contract to stage. Once the selected contract has
-successfully been staged, you will be presented with a claimable link that you can share or
+found contracts ready to be snapshotted. Select a contract to snapshot. Once the selected contract has
+successfully been snapshotted, you will be presented with a claimable link that you can share or
 use for secure deployments.

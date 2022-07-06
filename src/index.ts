@@ -1,30 +1,45 @@
 #! /usr/bin/env node
-
 import yargs from 'yargs'
 
-import { stage } from './commands/stage'
-
-yargs.scriptName('trakon').parse(process.argv.slice(2))
+import { snapshot } from './commands/snapshot'
+import { envMiddleware } from './middleware'
 
 yargs
   .scriptName('trakon')
+  .usage('$0 <cmd> [args]')
+  .option('api-key', {
+    type: 'string',
+    describe: 'API key generated from https://trakon.xyz',
+    global: false,
+  })
+  .option('verbose', {
+    alias: 'v',
+    type: 'boolean',
+    describe: 'Verbose output logging',
+    global: false,
+  })
+  .middleware([envMiddleware])
   .command({
-    command: 'stage',
-    describe: 'Discover compiled contracts in a directory for staging',
-    handler: stage,
+    command: 'snapshot [path]',
+    describe: 'Discover compiled contracts in a directory for snapshotting',
+    handler: snapshot,
     builder: (y) => {
       return y
         .positional('path', {
           describe:
             'The path on your local filesystem to scan when discovering Truffle and Hardhat codebases.',
-          default: (y.argv as any)._[1] ?? '.',
+          default: '.',
+          demandOption: false,
           type: 'string',
         })
-        .option('projectId', {
+        .option('project-id', {
           describe:
-            'The ID of the Project for which this snapshot is intended, if there is one.',
+            'The project ID for which this snapshot is intended, if there is one.',
           type: 'string',
         })
     },
   })
-  .parse(process.argv.slice(2))
+  .global(['api-key', 'verbose'])
+  .demandCommand(1, '')
+  .help()
+  .showHelpOnFail(true).argv
