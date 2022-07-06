@@ -1,6 +1,6 @@
 {
   "name": "trakon-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "github:zepheruslabs/trakon-cli",
   "homepage": "https://github.com/zepheruslabs/trakon-cli/tree/master",
   "description": "Trakon CLI for staging smart contracts on https://trakon.xyz",
@@ -40,6 +40,7 @@
     "globalinstall": "npm uninstall -g @trakon/cli && yarn build && rm -rf $(yarn cache dir)/.tmp && (rm ./trakon-cli.tgz || true) && yarn build && yarn pack --filename trakon-cli.tgz && npm i -g add file://$PWD/trakon-cli.tgz",
     "dev:watch": "ts-node-dev --watch './src/**/*.ts' --transpile-only ./src/index.ts",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
+    "build-publish": "yarn build && npm publish --access public",
     "create": "yarn build && yarn test"
   },
   "dependencies": {
