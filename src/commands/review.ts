@@ -4,7 +4,7 @@ import { prompts } from 'prompts'
 import { ArgumentsCamelCase } from 'yargs'
 
 import type { CompilerSettings } from '../types'
-import { checkAccessToken, getProjects, submitSnapshot } from '../api.service'
+import { checkAccessToken, submitReview } from '../api.service'
 import { TRAKON_UI_BASE } from '../api.constants'
 import env from '../env'
 
@@ -66,7 +66,7 @@ const parseSolcStandardArtifactJson = (artifact: {
   }
 }
 
-const promptConfirmSnapshot = async (scanResult: {
+const promptConfirmReview = async (scanResult: {
   sources: { [key: string]: {} }
   settings: {}
 }) => {
@@ -225,10 +225,9 @@ export const recompileStandard = async (
   )
 }
 
-export const snapshot = async (
+export const review = async (
   command: ArgumentsCamelCase<{
     path: string
-    projectId?: string
     apiKey?: string
   }>,
 ) => {
@@ -246,28 +245,6 @@ export const snapshot = async (
     return
   }
 
-  let projectId = command.projectId
-  if (!projectId) {
-    let projectsResponse = await getProjects({ limit: 25, offset: 0 })
-    if (projectsResponse.projects?.length || 0 > 0) {
-      projectId = await (prompts.select({
-        type: 'select',
-        name: 'Select project',
-        message: 'Choose an existing project or create a new one',
-        choices: [
-          { title: 'Create new project', value: '' },
-          ...(projectsResponse.projects?.map((project) => ({
-            title: project.name
-              ? `${project.name} (${project.slug})`
-              : project.slug,
-            value: project.slug,
-          })) ?? []),
-        ],
-        initial: 0,
-      }) as unknown as Promise<string>)
-    }
-  }
-
   const scanResult = scanPathForArtifacts(
     path.join(process.cwd(), command.path),
   )
@@ -277,7 +254,7 @@ export const snapshot = async (
     return
   }
 
-  const isConfirmed = await promptConfirmSnapshot(scanResult)
+  const isConfirmed = await promptConfirmReview(scanResult)
   if (!isConfirmed) {
     return
   }
@@ -303,9 +280,9 @@ export const snapshot = async (
 
   console.info('Uploading snapshot...')
   try {
-    const snapshotResult = await submitSnapshot(compilationResult, projectId)
+    const snapshotResult = await submitReview(compilationResult)
     console.info(
-      `Snapshot complete! To see your project, visit ${snapshotResult.url}`,
+      `Snapshot complete! To see your review, visit ${snapshotResult.url}`,
     )
   } catch (err: any) {
     console.error(

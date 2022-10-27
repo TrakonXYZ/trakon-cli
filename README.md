@@ -1,13 +1,15 @@
 # Trakon CLI
 
-Snapshot your hardhat and truffle compiled smart contracts with [Trakon](https://trakon.xyz). Then review, share, and deploy them from a [private dashboard](https://trakon.xyz/projects).
+Review your smart contracts with [Trakon Reviews](https://reviews.trakon.xyz). Snapshot the contract states in your hardhat or truffle repo, then review and share them.
 
 ## Installation & Usage
 
 ### Prerequisites
 
-Trakon requires [node 16.x](https://nodejs.org/en/download/) and contracts to be compiled in a [Hardhat](https://hardhat.org/) or [Truffle](https://trufflesuite.com/) project
+Trakon Reviews requires [node 16.x](https://nodejs.org/en/download/) and contracts to be compiled in a [Hardhat](https://hardhat.org/) or [Truffle](https://trufflesuite.com/) project
 before snapshotting.
+
+An API key from https://reviews.trakon.xyz is required to snapshot your contracts. If you have connected your wallet, you can find the API key by navigating to your [profile](https://reviews.trakon.xyz/profile).
 
 ### Compile your local contracts
 
@@ -25,11 +27,11 @@ npx hardhat compile
 truffle compile
 ```
 
-### Run the trakon snapshot command
+### Run the trakon review command
 
 #### Yarn 2
 ```shell
-yarn dlx -p trakon-cli trakon snapshot --api-key <your-api-key>
+yarn dlx -p trakon-cli trakon review --api-key <your-api-key>
 ```
 
 
@@ -37,14 +39,14 @@ yarn dlx -p trakon-cli trakon snapshot --api-key <your-api-key>
 
 ```shell
 yarn global add trakon-cli
-trakon snapshot --api-key <your-api-key>
+trakon review --api-key <your-api-key>
 ```
 
 #### NPM
 
 ```shell
 npm install -g trakon-cli
-trakon snapshot --api-key <your-api-key>
+trakon review --api-key <your-api-key>
 ```
 
 Trakon will search in your local project for any compiled contracts and present a list of found contracts ready to be snapshotted. Once the selected contracts have successfully been snapshotted and uploaded, you will be given a link to view the resulting project containing your contracts.
