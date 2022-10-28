@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 import yargs from 'yargs'
 
-import { snapshot } from './commands/snapshot'
+import { review } from './commands/review'
 import { envMiddleware } from './middleware'
 
 yargs
@@ -9,7 +9,7 @@ yargs
   .usage('$0 <cmd> [args]')
   .option('api-key', {
     type: 'string',
-    describe: 'API key generated from https://trakon.xyz',
+    describe: 'API key generated from https://reviews.trakon.xyz',
     global: false,
   })
   .option('verbose', {
@@ -20,23 +20,17 @@ yargs
   })
   .middleware([envMiddleware])
   .command({
-    command: 'snapshot [path]',
-    describe: 'Discover compiled contracts in a directory for snapshotting',
-    handler: snapshot,
+    command: 'review [path]',
+    describe: 'Discover compiled contracts in a directory for reviewing',
+    handler: review,
     builder: (y) => {
-      return y
-        .positional('path', {
-          describe:
-            'The path on your local filesystem to scan when discovering Truffle and Hardhat codebases.',
-          default: '.',
-          demandOption: false,
-          type: 'string',
-        })
-        .option('project-id', {
-          describe:
-            'The project ID for which this snapshot is intended, if there is one.',
-          type: 'string',
-        })
+      return y.positional('path', {
+        describe:
+          'The path on your local filesystem to scan when discovering Truffle and Hardhat codebases.',
+        default: '.',
+        demandOption: false,
+        type: 'string',
+      })
     },
   })
   .global(['api-key', 'verbose'])
