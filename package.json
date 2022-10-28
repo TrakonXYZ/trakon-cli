@@ -1,6 +1,6 @@
 {
   "name": "trakon-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": "github:zepheruslabs/trakon-cli",
   "homepage": "https://github.com/zepheruslabs/trakon-cli/tree/master",
   "description": "Trakon CLI for staging smart contracts on https://trakon.xyz",
